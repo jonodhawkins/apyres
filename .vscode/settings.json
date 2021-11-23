@@ -1,0 +1,11 @@
+{
+    "restructuredtext.confPath": "",
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.cwd": "",
+    "python.testing.pytestArgs": [
+        "src/tests", "-s"
+    ],
+    // Need -s argument to view output
+}
