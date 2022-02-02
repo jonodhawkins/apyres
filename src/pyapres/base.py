@@ -12,9 +12,9 @@ import numpy as np
 # Set logging level
 # logging.basicConfig(level=logging.DEBUG)
 
-APYRES_DAT_PROPERTIES = json.loads(
+PYAPRES_DAT_PROPERTIES = json.loads(
     importlib.resources.read_text(
-    "apyres.resources", "apres_dat_properties.json")
+    "pyapres.resources", "apres_dat_properties.json")
 )
 
 class FMCWParameters:
@@ -371,7 +371,7 @@ class ApRESBurst(FMCWData):
                         argName = s_result.group(1)
                         argVal = s_result.group(2)
 
-                        if not argName in APYRES_DAT_PROPERTIES:
+                        if not argName in PYAPRES_DAT_PROPERTIES:
                             logging.warning(
                                 "Invalid property {:s} on line {:d}.".format(
                                     argName, header_line
@@ -380,7 +380,7 @@ class ApRESBurst(FMCWData):
                         else:
 
                             # Get arg type from dictionary
-                            argType = APYRES_DAT_PROPERTIES[argName]["type"]
+                            argType = PYAPRES_DAT_PROPERTIES[argName]["type"]
                             if argType == "int":
                                 argVal = int(argVal)
                             elif argType =="float":
@@ -624,8 +624,8 @@ def _read_file(path, skip_burst):
 
     :param path: File path pointing to *.dat class to load
     :type path: str
-    :return: instance or tuple of py:class::apyres.ApRESBurst
-    :rtype: .. py:class::apyres.ApRESBurst
+    :return: instance or tuple of py:class::pyapres.ApRESBurst
+    :rtype: .. py:class::pyapres.ApRESBurst
     """
     
     # Have to be careful here because files can contain multiple bursts

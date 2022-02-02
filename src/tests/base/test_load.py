@@ -1,9 +1,9 @@
-import apyres
+import pyapres
 import numpy as np
 import pytest
 import os
 
-from apyres.base import ApRESBurst
+from pyapres.base import ApRESBurst
 
 def test_load_file():
 
@@ -17,19 +17,19 @@ def test_load_file():
 
     for f in filenames:
 
-        bursts = apyres.read(f)
+        bursts = pyapres.read(f)
 
 def test_load_dir():
 
     path ="src/tests/data"
     
-    bursts = apyres.read(path)
+    bursts = pyapres.read(path)
 
 def test_load_burst():
 
     path = "src/tests/data"
 
-    bursts = apyres.read(path)
+    bursts = pyapres.read(path)
 
     assert len(bursts) > 0
 
@@ -48,8 +48,8 @@ def test_load_burst():
 
 def test_range_profile():
 
-    burst = apyres.read("src\\tests\\data\\rhonegletscher-hf.dat", skip_burst=False)
-    rp = apyres.RangeProfile.calculate_from_chirp([], burst.chirp_voltage, burst.fmcw_parameters)
+    burst = pyapres.read("src\\tests\\data\\rhonegletscher-hf.dat", skip_burst=False)
+    rp = pyapres.RangeProfile.calculate_from_chirp([], burst.chirp_voltage, burst.fmcw_parameters)
 
     import matplotlib.pyplot as plt
     plt.plot(np.abs(rp.transpose()))

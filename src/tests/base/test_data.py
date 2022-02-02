@@ -1,4 +1,4 @@
-import apyres
+import pyapres
 import numpy as np
 import pytest
 
@@ -19,16 +19,16 @@ def test_data_time_voltage_assign():
     #   second argument is None for tests as this code shouldn't be
     #   executed and indicates that we are only testing first argument
     with pytest.raises(ValueError):
-        data = apyres.FMCWData([1,2,3], valid_data_single)
+        data = pyapres.FMCWData([1,2,3], valid_data_single)
 
     with pytest.raises(ValueError):
-        data = apyres.FMCWData((0.1,0.2,0.3), valid_data_single)
+        data = pyapres.FMCWData((0.1,0.2,0.3), valid_data_single)
 
     with pytest.raises(ValueError):
-        data = apyres.FMCWData("hello world", valid_data_single)
+        data = pyapres.FMCWData("hello world", valid_data_single)
     
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(np.array(['one','two','three']), valid_data_single)
+        data = pyapres.FMCWData(np.array(['one','two','three']), valid_data_single)
 
     # Check size mismatch errors -------------------------------------
     #   we should see that only 1xN or Nx1 arrays are accepted for
@@ -39,44 +39,44 @@ def test_data_time_voltage_assign():
     #   results.
 
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(np.zeros((2,3)), valid_data_single)
+        data = pyapres.FMCWData(np.zeros((2,3)), valid_data_single)
     
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(np.zeros((2,3,3)), valid_data_single)
+        data = pyapres.FMCWData(np.zeros((2,3,3)), valid_data_single)
 
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(valid_time, np.zeros((2,2)))
+        data = pyapres.FMCWData(valid_time, np.zeros((2,2)))
 
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(valid_time, np.zeros((2,2,3)))
+        data = pyapres.FMCWData(valid_time, np.zeros((2,2,3)))
     
     # Check valid approaches actually work
-    data = apyres.FMCWData(valid_time, valid_data_single)
+    data = pyapres.FMCWData(valid_time, valid_data_single)
     assert (data.voltage == valid_data_single).all()
     assert (data.time == valid_time).all()
 
-    data = apyres.FMCWData(valid_time, valid_data_multiple)
+    data = pyapres.FMCWData(valid_time, valid_data_multiple)
     assert (data.voltage == valid_data_multiple).all()
     assert (data.time == valid_time).all()  
 
-    data = apyres.FMCWData(valid_time.transpose(), valid_data_single)
+    data = pyapres.FMCWData(valid_time.transpose(), valid_data_single)
     assert (data.voltage == valid_data_single).all()
     assert (data.time == valid_time).all()
 
-    data = apyres.FMCWData(valid_time.transpose(), valid_data_single.transpose()) 
+    data = pyapres.FMCWData(valid_time.transpose(), valid_data_single.transpose()) 
     assert (data.voltage == valid_data_single).all()
     assert (data.time == valid_time).all()
 
-    data = apyres.FMCWData(valid_time, valid_data_single.transpose())
+    data = pyapres.FMCWData(valid_time, valid_data_single.transpose())
     assert (data.voltage == valid_data_single).all()
     assert (data.time == valid_time).all()
     
-    data = apyres.FMCWData(valid_time.transpose(), valid_data_multiple)
+    data = pyapres.FMCWData(valid_time.transpose(), valid_data_multiple)
     assert (data.voltage == valid_data_multiple).all()
     assert (data.time == valid_time).all()
 
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(valid_time.transpose(), valid_data_multiple.transpose()) 
+        data = pyapres.FMCWData(valid_time.transpose(), valid_data_multiple.transpose()) 
     
     with pytest.raises(ValueError):
-        data = apyres.FMCWData(valid_time, valid_data_multiple.transpose())
+        data = pyapres.FMCWData(valid_time, valid_data_multiple.transpose())
