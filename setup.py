@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="apyres",
+    name="pyapres",
     packages=find_packages(),
     package_dir={"":"src"},
     include_package_data=True,
