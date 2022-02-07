@@ -116,8 +116,8 @@ class FMCWParameters:
         
 
         if len(reg0B) == 16:
-            f_upper = np.round(int(reg0B[0:8], 16) / (2**32) * __class__.FREQ_SYS_CLK)
-            f_lower = np.round(int(reg0B[8:16], 16) / (2**32) * __class__.FREQ_SYS_CLK)
+            fmcw_params.f_upper = np.round(int(reg0B[0:8], 16) / (2**32) * __class__.FREQ_SYS_CLK)
+            fmcw_params.f_lower = np.round(int(reg0B[8:16], 16) / (2**32) * __class__.FREQ_SYS_CLK)
         else:
             raise ValueError("Invalid DDS Reg0B length ({:d}{:s}).".format(len(reg0B), reg0B))
 
@@ -146,10 +146,10 @@ class FMCWParameters:
             raise ValueError("Invalid DDS Reg0D length ({:d}:{:s}).".format(len(reg0D), reg0D))
 
         # Calculate center frequency
-        fmcw_params.fc = np.round((f_upper + f_lower) / 2)
+        fmcw_params.fc = np.round((fmcw_params.f_upper + fmcw_params.f_lower) / 2)
     
         # Calculate bandwidth
-        fmcw_params.B = np.round(f_upper - f_lower)
+        fmcw_params.B = np.round(fmcw_params.f_upper - fmcw_params.f_lower)
 
         # Calculate period
         fmcw_params.T = fmcw_params.B / df_positive * dt_positive
@@ -539,8 +539,8 @@ class ApRESBurst(FMCWData):
     @staticmethod
     def parse_special_parameter(parameter, value):
 
-        # Parse Time Stamp
-        if parameter == "Time Stamp":
+        # Parse Time stamp
+        if parameter == "Time stamp":
             return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
         
         elif parameter == "TxAnt":
@@ -657,9 +657,6 @@ def _read_file(path, skip_burst):
 
             # Read next header if available
             hObj = ApRESBurst.read_header(path, fh)
-
-    if len(bursts) == 1:
-        bursts = bursts[0]
 
     return bursts
 

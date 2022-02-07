@@ -394,5 +394,11 @@
         "example" : 0,
         "description" : "DDS ramp control bit.",
         "valid_source" : ["measured"]
+    },
+    "PowerCode" : {
+        "type" : "int",
+        "example" : 64,
+        "description" : "DDS output current control (0-127).",
+        "valid_source" : ["measured"]
     }
 }
